@@ -18,7 +18,6 @@ public class ScoreView : MonoBehaviour
 
     private void OnScoreChanged(int score)
     {
-        Debug.Log("changed scored");
         _score.text = score.ToString();
     }
 }

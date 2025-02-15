@@ -7,14 +7,17 @@ public class EnemyGun : Gun
 
     private void OnEnable()
     {
-        Debug.Log("ON");
         StartShooting();
     }
 
     private void OnDisable()
-    {
-        Debug.Log("OFF");
+    {      
         StopShooting();
+    }
+
+    public void ReloadGun()
+    {
+        _bulletSpawner.ClearBulletPool();
     }
 
     public void StartShooting()

@@ -1,12 +1,11 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(CollisionHandler))]
 public class Enemy : PoolableObject, IInteractable
 {
     [SerializeField] private EnemyGun _enemyGun;
 
-    //[SerializeField] private ScoreCounter _scoreCounter;
-    private ScoreCounter _scoreCounter;
     private CollisionHandler _collisionHandler;   
 
     public event Action<Enemy> EnemyRemoved;
@@ -14,9 +13,8 @@ public class Enemy : PoolableObject, IInteractable
 
     private void Awake()
     {
-        _scoreCounter = GetComponent<ScoreCounter>();
         _collisionHandler = GetComponent<CollisionHandler>();
-        Debug.Log("Reset active1? : " + gameObject.activeInHierarchy);
+        
         OffGun();
     }
 
@@ -33,12 +31,12 @@ public class Enemy : PoolableObject, IInteractable
     public void OnRemove()
     {
         EnemyRemoved?.Invoke(this);
+        EnemyDied?.Invoke();
+        OnGun();
     }
 
     public void ResetEnemy()
     {
-        Debug.Log("Reset active? : " + gameObject.activeInHierarchy);
-
         OnRemove();
         OnGun();
     }
@@ -47,6 +45,8 @@ public class Enemy : PoolableObject, IInteractable
     {
         if (interactable is PlayerBullet)
         {
+                       
+            _enemyGun.ReloadGun();
             OffGun();
             OnRemove();           
         }
@@ -54,15 +54,11 @@ public class Enemy : PoolableObject, IInteractable
 
     private void OffGun()
     {
-        //_enemyGun.StopShooting();
         _enemyGun.gameObject.SetActive(false);
     }
 
     private void OnGun()
     {
-        
-
         _enemyGun.gameObject.SetActive(true);
-        //_enemyGun.StartShooting();
     }
 }

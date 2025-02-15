@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-    [SerializeField] private Enemy _enemy;
+    [SerializeField] private Player _player; 
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private EndScreen _endScreen;
+    [SerializeField] private ScoreCounter _scoreCounter;
+ 
+    private Enemy _enemy;
 
     private void OnEnable()
     {
@@ -19,6 +21,12 @@ public class Game : MonoBehaviour
         _startScreen.StartButtonClicked -= OnStartButtonClick;
         _endScreen.RestartButtonClicked -= OnRestartButtonClick;
         _player.GameOver -= OnGameOver;
+    }
+
+    public void Init(Enemy enemy)
+    {
+        _enemy = enemy;
+        _scoreCounter.SetEnemy(enemy);
     }
 
     private void Start()
@@ -37,8 +45,6 @@ public class Game : MonoBehaviour
     {
         _endScreen.Close();
         StartGame();
-        Debug.Log("_enemy active1? : " + _enemy.gameObject.activeInHierarchy);
-
     }
 
     private void OnStartButtonClick()
@@ -52,5 +58,6 @@ public class Game : MonoBehaviour
         Time.timeScale = 1;
         _player.Reset();
         _enemy.ResetEnemy();
+        _scoreCounter.Reset(); 
     }
 }

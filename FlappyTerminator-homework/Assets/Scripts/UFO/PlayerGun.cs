@@ -4,13 +4,6 @@ public class PlayerGun : Gun
 {
     private float _timeDelayedFire;
     private float _startTimeDelayedFire = 0.75f;
-    private PlayerBullet _bullet;
-
-    private void OnEnable()
-    {
-        _bullet = GetComponent<PlayerBullet>();
-    }
-
 
     public void ReloadGun()
     {

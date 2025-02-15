@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(CollisionHandler))]
 public class Player : MonoBehaviour, IInteractable
 {
-    [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private PlayerGun _playerGun;
 
     private PlayerMover _playerMover;
@@ -38,13 +37,11 @@ public class Player : MonoBehaviour, IInteractable
             _playerGun.ReloadGun();
             OffGun();
             GameOver?.Invoke();
-
         }
     }
 
     public void Reset()
-    {
-        _scoreCounter.Reset();
+    {     
         _playerMover.Reset();
         OnGun();
     } 
