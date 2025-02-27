@@ -5,7 +5,7 @@ public class BulletSpawner : Spawner<Bullet>
 {
     private Transform _transform;
 
-    private void Start()
+    private void OnEnable()
     {
         _transform = GetComponent<Transform>();
     }
@@ -31,7 +31,7 @@ public class BulletSpawner : Spawner<Bullet>
 
     public void ClearBulletPool()
     {
-        foreach (Transform child in _parent.transform)
+        foreach (Transform child in _parent)
         {
             if (child.TryGetComponent(out Bullet bullet))
             {

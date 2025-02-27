@@ -2,22 +2,18 @@ using UnityEngine;
 
 public class EnemyBullet : Bullet
 {
-    protected override void OnEnable()
+    public override void OnEnable()
     {
-        StartCoroutine(DestroyBullet());
-        Move();
-
+        base.OnEnable();
         _collisionHandler.CollisionDetected += ProcessCollision;
     }
 
-    protected override void OnDestroy()
+    public override void OnDestroy()
     {
-        StopCoroutine(DestroyBullet());
-
-        _collisionHandler.CollisionDetected -= ProcessCollision;
+        base.OnDestroy();
     }
 
-    protected override void ProcessCollision(IInteractable interactable)
+    public override void ProcessCollision(IInteractable interactable)
     {
         if (interactable is Player)
         {
@@ -25,8 +21,8 @@ public class EnemyBullet : Bullet
         }
     }
 
-    protected override void Move()
-    {      
-        _bulletRigidbody.velocity = new Vector2(_speed, _bulletRigidbody.velocity.y);
+    public override void Move()
+    {     
+        base.Move();
     }
 }

@@ -5,6 +5,8 @@ public class EnemyGun : Gun
 {
     [SerializeField] private float _durationSpawn;
 
+    private Coroutine _coroutine;
+
     private void OnEnable()
     {
         StartShooting();
@@ -22,12 +24,13 @@ public class EnemyGun : Gun
 
     public void StartShooting()
     {
-        StartCoroutine(ShootProcess());
+        _coroutine = StartCoroutine(ShootProcess());
     }
 
     public void StopShooting()
     {
-        StopCoroutine(ShootProcess());
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
     }
 
     protected override void Shoot()
@@ -37,9 +40,11 @@ public class EnemyGun : Gun
 
     private IEnumerator ShootProcess()
     {    
+        var duration = new WaitForSeconds(_durationSpawn);
+
         while (true)
-        {           
-            yield return new WaitForSecondsRealtime(_durationSpawn);
+        {
+            yield return duration;
             Shoot();
         }       
     }

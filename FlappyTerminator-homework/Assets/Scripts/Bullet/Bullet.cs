@@ -5,10 +5,12 @@ using UnityEngine;
 public abstract class Bullet : PoolableObject, IInteractable
 {
     [SerializeField] protected float _speed;
-    
-    protected float _timeDestroy = 3f;
-    protected CollisionHandler _collisionHandler;
-    protected Rigidbody2D _bulletRigidbody;
+
+    public CollisionHandler _collisionHandler;
+
+    private float _timeDestroy = 3f;   
+    private Rigidbody2D _bulletRigidbody;
+    private Coroutine _coroutine;
 
     public event Action<Bullet> BulletRemoved;
 
@@ -18,22 +20,33 @@ public abstract class Bullet : PoolableObject, IInteractable
         _bulletRigidbody = GetComponent<Rigidbody2D>();        
     }
 
-    protected abstract void OnEnable();
+    public abstract void ProcessCollision(IInteractable interactable);
 
-    protected abstract void OnDestroy();
+    public virtual void OnEnable()
+    {
+        _coroutine = StartCoroutine(DestroyBullet());
+        Move();
+    }
 
-    protected abstract void ProcessCollision(IInteractable interactable);
+    public virtual void OnDestroy()
+    {
+        StopCoroutine(_coroutine);
+        _collisionHandler.CollisionDetected -= ProcessCollision;
+    }
 
-    protected abstract void Move();
+    public virtual void Move()
+    {
+        _bulletRigidbody.velocity = new Vector2(_speed, _bulletRigidbody.velocity.y);
+    }
 
     public void OnRemove()
     {
         BulletRemoved?.Invoke(this);
     }
 
-    protected IEnumerator DestroyBullet()
+    private IEnumerator DestroyBullet()
     {
-        yield return new WaitForSecondsRealtime(_timeDestroy);
+        yield return new WaitForSeconds(_timeDestroy);
         OnRemove();
     }
 }

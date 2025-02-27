@@ -34,7 +34,7 @@ public class EnemySpawner : Spawner<Enemy>
 
     private IEnumerator NewEnemy()
     {
-        yield return new WaitForSecondsRealtime(_durationSpawn);
+        yield return new WaitForSeconds(_durationSpawn);
         GetPool();
     }
 

@@ -23,7 +23,7 @@ namespace Spawners
         public T CreateObject()
         {
             T newObject = Instantiate(_prefab);
-            newObject.transform.SetParent(_parent.transform);
+            newObject.transform.SetParent(_parent);
             Spawned?.Invoke(newObject);
             return newObject;
         }

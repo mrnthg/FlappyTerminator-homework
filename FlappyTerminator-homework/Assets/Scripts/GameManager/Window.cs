@@ -21,7 +21,15 @@ public abstract class Window : MonoBehaviour
 
     protected abstract void OnButtonClick();
 
-    public abstract void Open();
+    public virtual void Open()
+    {
+        WindowGroup.alpha = 1f;
+        ActionButton.interactable = true;
+    }
 
-    public abstract void Close();
+    public virtual void Close()
+    {
+        WindowGroup.alpha = 0;
+        ActionButton.interactable = false;
+    }
 }

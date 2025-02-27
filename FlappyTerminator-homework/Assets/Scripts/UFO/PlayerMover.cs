@@ -14,14 +14,17 @@ public class PlayerMover : MonoBehaviour
     private Quaternion _maxRotation;
     private Quaternion _minRotation;
 
-    private void Start()
+    private void Awake()
     {
         _palyerRigidbody = GetComponent<Rigidbody2D>();
         _startPosition = transform.position;
 
         _maxRotation = Quaternion.Euler(0, 0, _maxRotationZ);
         _minRotation = Quaternion.Euler(0, 0, _minRotationZ);
+    }
 
+    private void Start()
+    {                   
         Reset();
     }
 

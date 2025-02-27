@@ -44,8 +44,7 @@ public class Enemy : PoolableObject, IInteractable
     private void ProcessCollision(IInteractable interactable)
     {
         if (interactable is PlayerBullet)
-        {
-                       
+        {                      
             _enemyGun.ReloadGun();
             OffGun();
             OnRemove();           
