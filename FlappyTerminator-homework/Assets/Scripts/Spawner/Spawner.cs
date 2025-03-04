@@ -17,7 +17,7 @@ namespace Spawners
 
         private void Awake()
         {
-            _pool = new ObjectPool<T>(CreateObject, ActionOnGet, OnRelease, Destroy, true, _defaultSize, _maxSize);
+            _pool = new ObjectPool<T>(CreateObject, PerformOnGet, OnRelease, Destroy, true, _defaultSize, _maxSize);
         }
 
         public T CreateObject()
@@ -28,7 +28,7 @@ namespace Spawners
             return newObject;
         }
 
-        public abstract void ActionOnGet(T newObject);
+        public abstract void PerformOnGet(T newObject);
 
         public abstract void OnRelease(T newObject);    
 

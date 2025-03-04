@@ -6,21 +6,19 @@ public class Enemy : PoolableObject, IInteractable
 {
     [SerializeField] private EnemyGun _enemyGun;
 
-    private CollisionHandler _collisionHandler;   
+    private CollisionHandler _collisionHandler;
 
     public event Action<Enemy> EnemyRemoved;
-    public event Action EnemyDied;
 
     private void Awake()
     {
         _collisionHandler = GetComponent<CollisionHandler>();
-        
         OffGun();
     }
 
     private void OnEnable()
-    {       
-        _collisionHandler.CollisionDetected += ProcessCollision;
+    {
+        _collisionHandler.CollisionDetected += ProcessCollision;       
     }
 
     private void OnDisable()
@@ -31,14 +29,18 @@ public class Enemy : PoolableObject, IInteractable
     public void OnRemove()
     {
         EnemyRemoved?.Invoke(this);
-        EnemyDied?.Invoke();
         OnGun();
     }
 
     public void ResetEnemy()
     {
+        if (_enemyGun.gameObject.active)
+        {
+            _enemyGun.ReloadGun();
+        }
+
         OnRemove();
-        OnGun();
+        OnGun();      
     }
 
     private void ProcessCollision(IInteractable interactable)
@@ -53,11 +55,11 @@ public class Enemy : PoolableObject, IInteractable
 
     private void OffGun()
     {
-        _enemyGun.gameObject.SetActive(false);
+        _enemyGun.gameObject.SetActive(false);       
     }
 
     private void OnGun()
-    {
+    {       
         _enemyGun.gameObject.SetActive(true);
     }
 }

@@ -8,7 +8,8 @@ public class Player : MonoBehaviour, IInteractable
     [SerializeField] private PlayerGun _playerGun;
 
     private PlayerMover _playerMover;
-    private CollisionHandler _collisionHandler;  
+    private CollisionHandler _collisionHandler;
+    private ScoreCounter _scoreCounter;
 
     public event Action GameOver;
 

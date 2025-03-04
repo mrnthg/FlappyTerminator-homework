@@ -10,7 +10,7 @@ public class BulletSpawner : Spawner<Bullet>
         _transform = GetComponent<Transform>();
     }
 
-    public override void ActionOnGet(Bullet bullet)
+    public override void PerformOnGet(Bullet bullet)
     {
         bullet.gameObject.SetActive(true);
 

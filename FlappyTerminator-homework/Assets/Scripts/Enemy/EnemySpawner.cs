@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,18 +7,20 @@ using Spawners;
 public class EnemySpawner : Spawner<Enemy>
 {
     [SerializeField] private List<Transform> _pointsSpawn = new List<Transform>();
-    [SerializeField] protected Game _game;
 
-    private float _durationSpawn = 0.5f; 
+    private float _durationSpawn = 0.5f;
+
+    public event Action<Enemy> EnemySpawned;
+    public event Action EnemyRemoved;
 
     private void Start()
     {
         GetPool();
     }
 
-    public override void ActionOnGet(Enemy enemy)
+    public override void PerformOnGet(Enemy enemy)
     {
-        _game.Init(enemy);
+        EnemySpawned?.Invoke(enemy);
 
         enemy.gameObject.SetActive(true);
         enemy.transform.position = _pointsSpawn[RandomPoint()].position;            
@@ -26,10 +29,12 @@ public class EnemySpawner : Spawner<Enemy>
 
     public override void OnRelease(Enemy enemy)
     {
-        StartCoroutine(NewEnemy());
-        
+        EnemyRemoved?.Invoke();
+
         enemy.gameObject.SetActive(false);      
         enemy.EnemyRemoved -= RemoveObject;
+        
+        StartCoroutine(NewEnemy());
     }
 
     private IEnumerator NewEnemy()
@@ -39,5 +44,5 @@ public class EnemySpawner : Spawner<Enemy>
     }
 
     private int RandomPoint() =>
-        Random.Range(0, _pointsSpawn.Count);
+        UnityEngine.Random.Range(0, _pointsSpawn.Count);
 }

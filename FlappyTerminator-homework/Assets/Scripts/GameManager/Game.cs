@@ -6,11 +6,14 @@ public class Game : MonoBehaviour
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private EndScreen _endScreen;
     [SerializeField] private ScoreCounter _scoreCounter;
- 
+    [SerializeField] private EnemySpawner _enemySpawner;
+
     private Enemy _enemy;
 
     private void OnEnable()
     {
+        _enemySpawner.EnemySpawned += OnSetEnemy;
+        _enemySpawner.EnemyRemoved += _scoreCounter.IncreasedDeaths;
         _startScreen.StartButtonClicked += OnStartButtonClick;
         _endScreen.RestartButtonClicked += OnRestartButtonClick;
         _player.GameOver += OnGameOver;
@@ -18,21 +21,22 @@ public class Game : MonoBehaviour
 
     private void OnDisable()
     {
+        _enemySpawner.EnemySpawned -= OnSetEnemy;
+        _enemySpawner.EnemyRemoved -= _scoreCounter.IncreasedDeaths;
         _startScreen.StartButtonClicked -= OnStartButtonClick;
         _endScreen.RestartButtonClicked -= OnRestartButtonClick;
         _player.GameOver -= OnGameOver;
-    }
-
-    public void Init(Enemy enemy)
-    {
-        _enemy = enemy;
-        _scoreCounter.SetEnemy(enemy);
     }
 
     private void Start()
     {
         Time.timeScale = 0;
         _startScreen.Open();
+    }
+
+    private void OnSetEnemy(Enemy enemy)
+    {
+        _enemy = enemy;
     }
 
     private void OnGameOver()

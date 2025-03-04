@@ -286,6 +286,7 @@ MonoBehaviour:
   _startScreen: {fileID: 1514061875}
   _endScreen: {fileID: 1449040001}
   _scoreCounter: {fileID: 1582702824}
+  _enemySpawner: {fileID: 1504746571}
 --- !u!1 &294094787
 GameObject:
   m_ObjectHideFlags: 0
@@ -2386,6 +2387,7 @@ GameObject:
   - component: {fileID: 1768563788}
   - component: {fileID: 1768563789}
   - component: {fileID: 1768563790}
+  - component: {fileID: 1768563791}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -2432,6 +2434,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e40f5013b95af214681bd7c296212c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1768563791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768563787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd4901203cb33e47a8065d27fc0a3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1791118854

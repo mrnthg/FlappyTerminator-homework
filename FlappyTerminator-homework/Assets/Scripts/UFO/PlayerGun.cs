@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class PlayerGun : Gun
 {
+    private GetActionInput _getActionInput;
     private float _timeDelayedFire;
     private float _startTimeDelayedFire = 0.75f;
 
-    public void ReloadGun()
+    private void OnEnable()
     {
-        _bulletSpawner.ClearBulletPool();
+        _getActionInput = GetComponent<GetActionInput>();
     }
 
     private void Update()
@@ -15,11 +16,16 @@ public class PlayerGun : Gun
         Shoot();
     }
 
+    public void ReloadGun()
+    {
+        _bulletSpawner.ClearBulletPool();
+    }
+
     protected override void Shoot()
     {
         if (_timeDelayedFire <= 0)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (_getActionInput.GetIsShot())
             {
                 _bulletSpawner.GetBullet();
                 _timeDelayedFire = _startTimeDelayedFire;
