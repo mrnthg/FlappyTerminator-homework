@@ -24,7 +24,7 @@ public class EnemySpawner : Spawner<Enemy>
 
         enemy.gameObject.SetActive(true);
         enemy.transform.position = _pointsSpawn[RandomPoint()].position;            
-        enemy.EnemyRemoved += RemoveObject;
+        enemy.Removed += RemoveObject;
     }
 
     public override void OnRelease(Enemy enemy)
@@ -32,7 +32,7 @@ public class EnemySpawner : Spawner<Enemy>
         EnemyRemoved?.Invoke();
 
         enemy.gameObject.SetActive(false);      
-        enemy.EnemyRemoved -= RemoveObject;
+        enemy.Removed -= RemoveObject;
         
         StartCoroutine(NewEnemy());
     }

@@ -1,15 +1,13 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMover))]
-[RequireComponent(typeof(CollisionHandler))]
+[RequireComponent(typeof(PlayerMover), typeof(CollisionHandler))]
 public class Player : MonoBehaviour, IInteractable
 {
-    [SerializeField] private PlayerGun _playerGun;
+    [SerializeField] private PlayerGun _gun;
 
     private PlayerMover _playerMover;
     private CollisionHandler _collisionHandler;
-    private ScoreCounter _scoreCounter;
 
     public event Action GameOver;
 
@@ -33,9 +31,9 @@ public class Player : MonoBehaviour, IInteractable
 
     private void ProcessCollision(IInteractable interactable)
     {
-        if (interactable is Obstacle || interactable is EnemyBullet)
+        if (interactable is Obstacle || interactable is EnemyBullet || interactable is Enemy)
         {
-            _playerGun.ReloadGun();
+            _gun.ReloadGun();
             OffGun();
             GameOver?.Invoke();
         }
@@ -49,11 +47,11 @@ public class Player : MonoBehaviour, IInteractable
 
     private void OffGun()
     {
-        _playerGun.gameObject.SetActive(false);    
+        _gun.gameObject.SetActive(false);    
     }
 
     private void OnGun()
     {
-        _playerGun.gameObject.SetActive(true);
+        _gun.gameObject.SetActive(true);
     }
 }

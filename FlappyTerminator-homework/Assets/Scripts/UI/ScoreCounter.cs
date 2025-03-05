@@ -13,7 +13,7 @@ public class ScoreCounter : MonoBehaviour
         ScoreChanged?.Invoke(_score);
     }
 
-    public void IncreasedDeaths()
+    public void AddScore()
     {       
         _score++;
         ScoreChanged?.Invoke(_score); 

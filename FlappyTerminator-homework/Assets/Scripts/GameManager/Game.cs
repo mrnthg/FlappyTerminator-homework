@@ -13,7 +13,7 @@ public class Game : MonoBehaviour
     private void OnEnable()
     {
         _enemySpawner.EnemySpawned += OnSetEnemy;
-        _enemySpawner.EnemyRemoved += _scoreCounter.IncreasedDeaths;
+        _enemySpawner.EnemyRemoved += _scoreCounter.AddScore;
         _startScreen.StartButtonClicked += OnStartButtonClick;
         _endScreen.RestartButtonClicked += OnRestartButtonClick;
         _player.GameOver += OnGameOver;
@@ -22,7 +22,7 @@ public class Game : MonoBehaviour
     private void OnDisable()
     {
         _enemySpawner.EnemySpawned -= OnSetEnemy;
-        _enemySpawner.EnemyRemoved -= _scoreCounter.IncreasedDeaths;
+        _enemySpawner.EnemyRemoved -= _scoreCounter.AddScore;
         _startScreen.StartButtonClicked -= OnStartButtonClick;
         _endScreen.RestartButtonClicked -= OnRestartButtonClick;
         _player.GameOver -= OnGameOver;

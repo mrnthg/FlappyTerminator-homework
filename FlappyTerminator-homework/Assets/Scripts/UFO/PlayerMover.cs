@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(GetActionPlayerInput))]
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _tapForce;
@@ -9,6 +9,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _maxRotationZ;
     [SerializeField] private float _minRotationZ;
 
+    private GetActionPlayerInput _getActionInput;
     private Vector3 _startPosition;
     private Rigidbody2D _palyerRigidbody;
     private Quaternion _maxRotation;
@@ -17,6 +18,7 @@ public class PlayerMover : MonoBehaviour
     private void Awake()
     {
         _palyerRigidbody = GetComponent<Rigidbody2D>();
+        _getActionInput = GetComponent<GetActionPlayerInput>();
         _startPosition = transform.position;
 
         _maxRotation = Quaternion.Euler(0, 0, _maxRotationZ);
@@ -32,7 +34,7 @@ public class PlayerMover : MonoBehaviour
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, _minRotation, _rotationSpeed * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (_getActionInput.GetIsFly())
         {
             _palyerRigidbody.velocity = new Vector2(_speed, _tapForce);
             transform.rotation = _maxRotation;

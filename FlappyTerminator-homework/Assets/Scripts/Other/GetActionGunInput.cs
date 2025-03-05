@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GetActionInput : MonoBehaviour
+public class GetActionGunInput : MonoBehaviour
 {
     private bool _isShot = false;
 

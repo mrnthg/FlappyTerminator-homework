@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b4e95a73f9da7449b52076bc36e28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyGun: {fileID: 670254190449176217}
+  _gun: {fileID: 670254190449176217}
 --- !u!114 &4810881514349143113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,3 +208,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 2123926783179513858, guid: dd0778318da358843ad43017df0096be, type: 3}
   _parent: {fileID: 5841835604233335406}
+  _transform: {fileID: 5923619177154424051}

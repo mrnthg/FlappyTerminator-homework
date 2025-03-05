@@ -4,11 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(CollisionHandler))]
 public class Enemy : PoolableObject, IInteractable
 {
-    [SerializeField] private EnemyGun _enemyGun;
+    [SerializeField] private EnemyGun _gun;
 
     private CollisionHandler _collisionHandler;
 
-    public event Action<Enemy> EnemyRemoved;
+    public event Action<Enemy> Removed;
 
     private void Awake()
     {
@@ -28,15 +28,15 @@ public class Enemy : PoolableObject, IInteractable
 
     public void OnRemove()
     {
-        EnemyRemoved?.Invoke(this);
+        Removed?.Invoke(this);
         OnGun();
     }
 
     public void ResetEnemy()
     {
-        if (_enemyGun.gameObject.active)
+        if (_gun.gameObject.active)
         {
-            _enemyGun.ReloadGun();
+            _gun.ReloadGun();
         }
 
         OnRemove();
@@ -45,9 +45,9 @@ public class Enemy : PoolableObject, IInteractable
 
     private void ProcessCollision(IInteractable interactable)
     {
-        if (interactable is PlayerBullet)
-        {                      
-            _enemyGun.ReloadGun();
+        if (interactable is PlayerBullet || interactable is EnemyRemover)
+        {           
+            _gun.ReloadGun();
             OffGun();
             OnRemove();           
         }
@@ -55,11 +55,11 @@ public class Enemy : PoolableObject, IInteractable
 
     private void OffGun()
     {
-        _enemyGun.gameObject.SetActive(false);       
+        _gun.gameObject.SetActive(false);       
     }
 
     private void OnGun()
     {       
-        _enemyGun.gameObject.SetActive(true);
+        _gun.gameObject.SetActive(true);
     }
 }

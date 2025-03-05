@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(BulletSpawner))]
 public abstract class Gun : MonoBehaviour
 {
     protected BulletSpawner _bulletSpawner;

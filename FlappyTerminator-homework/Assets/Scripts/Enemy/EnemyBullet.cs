@@ -5,12 +5,7 @@ public class EnemyBullet : Bullet
     public override void OnEnable()
     {
         base.OnEnable();
-        _collisionHandler.CollisionDetected += ProcessCollision;
-    }
-
-    public override void OnDestroy()
-    {
-        base.OnDestroy();
+        collisionHandler.CollisionDetected += ProcessCollision;
     }
 
     public override void ProcessCollision(IInteractable interactable)
@@ -19,10 +14,5 @@ public class EnemyBullet : Bullet
         {
             OnRemove();
         }
-    }
-
-    public override void Move()
-    {     
-        base.Move();
     }
 }
