@@ -1,12 +1,18 @@
+using System;
 using UnityEngine;
 
-public class GetActionPlayerInput : MonoBehaviour
+public class ActionPlayerInput : MonoBehaviour
 {
     private bool _isFly = false;
     private KeyCode _flyKey = KeyCode.Space;
 
+    public event Action Shoots;
+
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+            Shoots?.Invoke();        
+
         if (Input.GetKeyDown(_flyKey))
             _isFly = true;
     }

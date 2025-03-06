@@ -17,9 +17,14 @@ public class EnemyGun : Gun
         StopShooting();
     }
 
+    public void SetBulletSpawner(BulletSpawner bulletSpawner)
+    {
+        BulletSpawner = bulletSpawner;
+    }
+
     public void ReloadGun()
     {
-        _bulletSpawner.ClearBulletPool();
+        BulletSpawner.ClearBulletPool();
     }
 
     public void StartShooting()
@@ -35,7 +40,7 @@ public class EnemyGun : Gun
 
     protected override void Shoot()
     {
-        _bulletSpawner.GetBullet();
+        BulletSpawner.GetBullet();
     }
 
     private IEnumerator ShootProcess()

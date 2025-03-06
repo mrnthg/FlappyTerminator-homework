@@ -5,9 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(CollisionHandler))]
 public abstract class Bullet : PoolableObject, IInteractable
 {
-    [SerializeField] protected float _speed;
+    [SerializeField] protected float Speed;
 
-    [NonSerialized] public CollisionHandler collisionHandler;
+    [NonSerialized] public CollisionHandler ÑollisionHandler;
 
     private float _timeDestroy = 3f;   
     private Coroutine _coroutine;
@@ -16,14 +16,14 @@ public abstract class Bullet : PoolableObject, IInteractable
 
     private void Awake()
     {
-        collisionHandler = GetComponent<CollisionHandler>();               
+        ÑollisionHandler = GetComponent<CollisionHandler>();               
     }
 
     public abstract void ProcessCollision(IInteractable interactable);
 
     public virtual void OnEnable()
     {
-        collisionHandler.CollisionDetected += ProcessCollision;
+        ÑollisionHandler.CollisionDetected += ProcessCollision;
         _coroutine = StartCoroutine(DestroyBullet());
     }
 
@@ -39,22 +39,22 @@ public abstract class Bullet : PoolableObject, IInteractable
 
     public virtual void OnDestroy()
     {
-        collisionHandler.CollisionDetected -= ProcessCollision;
+        ÑollisionHandler.CollisionDetected -= ProcessCollision;
     }
 
-    public void OnRemove()
+    public void Remove()
     {
         Removed?.Invoke(this);
     }
 
     private void Move()
     {      
-        transform.Translate(Vector2.right * _speed * Time.deltaTime);
+        transform.Translate(Vector2.right * Speed * Time.deltaTime);
     }
 
     private IEnumerator DestroyBullet()
     {
         yield return new WaitForSeconds(_timeDestroy);
-        OnRemove();
+        Remove();
     }
 }

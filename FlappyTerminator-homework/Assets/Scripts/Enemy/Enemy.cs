@@ -10,6 +10,8 @@ public class Enemy : PoolableObject, IInteractable
 
     public event Action<Enemy> Removed;
 
+    public EnemyGun Gun => _gun;
+
     private void Awake()
     {
         _collisionHandler = GetComponent<CollisionHandler>();

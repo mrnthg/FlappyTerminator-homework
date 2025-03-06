@@ -1,14 +1,10 @@
 using UnityEngine;
 using Spawners;
+using UnityEngine.Pool;
 
 public class BulletSpawner : Spawner<Bullet>
 {
-    [SerializeField] private Transform _transform;
-
-    private void OnEnable()
-    {
-        //_transform = GetComponent<Transform>();
-    }
+    private Transform _transform;
 
     public override void PerformOnGet(Bullet bullet)
     {
@@ -16,6 +12,11 @@ public class BulletSpawner : Spawner<Bullet>
         bullet.transform.position = _transform.position;
         bullet.transform.rotation = _transform.rotation;
         bullet.Removed += RemoveObject;
+    }
+
+    public void SetBulletPosition(Transform transform)
+    {
+        _transform = transform;
     }
 
     public override void OnRelease(Bullet bullet)
@@ -31,11 +32,11 @@ public class BulletSpawner : Spawner<Bullet>
 
     public void ClearBulletPool()
     {
-        foreach (Transform child in _parent)
+        foreach (Transform child in Parent)
         {
             if (child.TryGetComponent(out Bullet bullet))
             {
-                bullet.OnRemove();
+                bullet.Remove();
             }           
         }
     }

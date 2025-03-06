@@ -6,8 +6,8 @@ namespace Spawners
 {
     public abstract class Spawner<T> : MonoBehaviour where T : PoolableObject
     {
-        [SerializeField] protected T _prefab;
-        [SerializeField] protected Transform _parent;
+        [SerializeField] protected T Prefab;
+        [SerializeField] protected Transform Parent;
 
         private ObjectPool<T> _pool;
         private int _defaultSize = 10;
@@ -22,8 +22,8 @@ namespace Spawners
 
         public T CreateObject()
         {
-            T newObject = Instantiate(_prefab);
-            newObject.transform.SetParent(_parent);
+            T newObject = Instantiate(Prefab);
+            newObject.transform.SetParent(Parent);
             Spawned?.Invoke(newObject);
             return newObject;
         }

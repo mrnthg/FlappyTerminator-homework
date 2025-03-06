@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(GetActionPlayerInput))]
+[RequireComponent(typeof(Rigidbody2D), typeof(ActionPlayerInput))]
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _tapForce;
@@ -9,7 +9,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _maxRotationZ;
     [SerializeField] private float _minRotationZ;
 
-    private GetActionPlayerInput _getActionInput;
+    private ActionPlayerInput _getActionInput;
     private Vector3 _startPosition;
     private Rigidbody2D _palyerRigidbody;
     private Quaternion _maxRotation;
@@ -18,7 +18,7 @@ public class PlayerMover : MonoBehaviour
     private void Awake()
     {
         _palyerRigidbody = GetComponent<Rigidbody2D>();
-        _getActionInput = GetComponent<GetActionPlayerInput>();
+        _getActionInput = GetComponent<ActionPlayerInput>();
         _startPosition = transform.position;
 
         _maxRotation = Quaternion.Euler(0, 0, _maxRotationZ);

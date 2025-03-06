@@ -7,6 +7,7 @@ using Spawners;
 public class EnemySpawner : Spawner<Enemy>
 {
     [SerializeField] private List<Transform> _pointsSpawn = new List<Transform>();
+    [SerializeField] private BulletSpawner _bulletSpawner;
 
     private float _durationSpawn = 0.5f;
 
@@ -23,7 +24,9 @@ public class EnemySpawner : Spawner<Enemy>
         EnemySpawned?.Invoke(enemy);
 
         enemy.gameObject.SetActive(true);
-        enemy.transform.position = _pointsSpawn[RandomPoint()].position;            
+        enemy.transform.position = _pointsSpawn[RandomPoint()].position;
+        enemy.Gun.SetBulletSpawner(_bulletSpawner);
+        _bulletSpawner.SetBulletPosition(enemy.transform);
         enemy.Removed += RemoveObject;
     }
 

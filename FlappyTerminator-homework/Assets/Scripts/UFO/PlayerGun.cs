@@ -1,39 +1,56 @@
 using UnityEngine;
+using System.Collections;
 
+[RequireComponent(typeof(BulletSpawner))]
 public class PlayerGun : Gun
 {
-    private GetActionGunInput _getActionGunInput;
+    [SerializeField] private ActionPlayerInput _actionPlayerInput;
+
+    private float _startTimeDelayedFire = 0f;
     private float _timeDelayedFire;
-    private float _startTimeDelayedFire = 0.75f;
+    private float _delayedFire = 0.75f;
+    private bool _isActiveGun = false;
+    private Coroutine _coroutine;
 
     private void OnEnable()
     {
-        _getActionGunInput = GetComponent<GetActionGunInput>();
+        BulletSpawner = GetComponent<BulletSpawner>();
+        BulletSpawner.SetBulletPosition(transform); 
+        
+        _isActiveGun = true;
+        _timeDelayedFire = _startTimeDelayedFire;
+        _actionPlayerInput.Shoots += Shoot;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        Shoot();
+        _actionPlayerInput.Shoots -= Shoot;
+        _isActiveGun = false;
     }
 
     public void ReloadGun()
     {
-        _bulletSpawner.ClearBulletPool();
+        BulletSpawner.ClearBulletPool();
     }
 
     protected override void Shoot()
     {
-        if (_timeDelayedFire <= 0)
+        if (_timeDelayedFire <= 0 && _isActiveGun)
         {
-            if (_getActionGunInput.GetIsShot())
-            {
-                _bulletSpawner.GetBullet();
-                _timeDelayedFire = _startTimeDelayedFire;
-            }
+            BulletSpawner.GetBullet();
+            _timeDelayedFire = _delayedFire;
+            _coroutine = StartCoroutine(CountdownDelay());
         }
-        else
+    }
+
+    private IEnumerator CountdownDelay()
+    {
+        while (_timeDelayedFire > 0) 
         {
             _timeDelayedFire -= Time.deltaTime;
+            yield return null;
         }
+
+        StopCoroutine(_coroutine);
     }
 }
