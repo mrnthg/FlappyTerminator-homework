@@ -10,13 +10,15 @@ public class EnemySpawner : Spawner<Enemy>
     [SerializeField] private BulletSpawner _bulletSpawner;
 
     private float _durationSpawn = 0.5f;
+    private WaitForSeconds _duration;
 
     public event Action<Enemy> EnemySpawned;
     public event Action EnemyRemoved;
 
     private void Start()
     {
-        GetPool();
+        _duration = new WaitForSeconds(_durationSpawn);
+        GetObject();
     }
 
     public override void PerformOnGet(Enemy enemy)
@@ -37,13 +39,13 @@ public class EnemySpawner : Spawner<Enemy>
         enemy.gameObject.SetActive(false);      
         enemy.Removed -= RemoveObject;
         
-        StartCoroutine(NewEnemy());
+        StartCoroutine(CreateNewEnemy());
     }
 
-    private IEnumerator NewEnemy()
+    private IEnumerator CreateNewEnemy()
     {
-        yield return new WaitForSeconds(_durationSpawn);
-        GetPool();
+        yield return _duration;
+        GetObject();
     }
 
     private int RandomPoint() =>

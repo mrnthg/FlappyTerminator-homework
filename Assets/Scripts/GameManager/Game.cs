@@ -14,8 +14,8 @@ public class Game : MonoBehaviour
     {
         _enemySpawner.EnemySpawned += OnSetEnemy;
         _enemySpawner.EnemyRemoved += _scoreCounter.AddScore;
-        _startScreen.StartButtonClicked += OnStartButtonClick;
-        _endScreen.RestartButtonClicked += OnRestartButtonClick;
+        _startScreen.ButtonClicked += OnStartButtonClick;
+        _endScreen.ButtonClicked += OnRestartButtonClick;
         _player.GameOver += OnGameOver;
     }
 
@@ -23,8 +23,8 @@ public class Game : MonoBehaviour
     {
         _enemySpawner.EnemySpawned -= OnSetEnemy;
         _enemySpawner.EnemyRemoved -= _scoreCounter.AddScore;
-        _startScreen.StartButtonClicked -= OnStartButtonClick;
-        _endScreen.RestartButtonClicked -= OnRestartButtonClick;
+        _startScreen.ButtonClicked -= OnStartButtonClick;
+        _endScreen.ButtonClicked -= OnRestartButtonClick;
         _player.GameOver -= OnGameOver;
     }
 

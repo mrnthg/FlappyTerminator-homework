@@ -5,16 +5,9 @@ public class EnemyGun : Gun
 {
     [SerializeField] private float _durationSpawn;
 
-    private Coroutine _coroutine;
-
     private void OnEnable()
     {
         StartShooting();
-    }
-
-    private void OnDisable()
-    {      
-        StopShooting();
     }
 
     public void SetBulletSpawner(BulletSpawner bulletSpawner)
@@ -27,15 +20,9 @@ public class EnemyGun : Gun
         BulletSpawner.ClearBulletPool();
     }
 
-    public void StartShooting()
+    private void StartShooting()
     {
-        _coroutine = StartCoroutine(ShootProcess());
-    }
-
-    public void StopShooting()
-    {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        StartCoroutine(ShootProcess());
     }
 
     protected override void Shoot()

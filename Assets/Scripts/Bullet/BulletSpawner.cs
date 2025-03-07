@@ -1,6 +1,5 @@
 using UnityEngine;
 using Spawners;
-using UnityEngine.Pool;
 
 public class BulletSpawner : Spawner<Bullet>
 {
@@ -27,7 +26,7 @@ public class BulletSpawner : Spawner<Bullet>
 
     public void GetBullet()
     {
-        GetPool();
+        GetObject();
     }
 
     public void ClearBulletPool()

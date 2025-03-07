@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6755316253429413423}
   - component: {fileID: 7109180215183400867}
   - component: {fileID: 9148608405841710671}
-  - component: {fileID: 184931691584564374}
+  - component: {fileID: -7057888272387395266}
   - component: {fileID: 4316569101793058410}
   - component: {fileID: -2118038614775792513}
   m_Layer: 0
@@ -100,8 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e357d88fcdbd5564b92b618e165877df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 16
---- !u!114 &184931691584564374
+  _speed: 16
+  _isEnemyBullet: 0
+--- !u!114 &-7057888272387395266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9096445539992359861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 516749bb22b703c45a4300b5d68bdfd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d06161ff0381f34a95bd9441b934ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &4316569101793058410

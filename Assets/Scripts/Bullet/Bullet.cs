@@ -2,44 +2,45 @@ using System.Collections;
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(CollisionHandler))]
-public abstract class Bullet : PoolableObject, IInteractable
+[RequireComponent(typeof(BulletCollisionHandler))]
+public abstract class Bullet :PoolableObject, IInteractable 
 {
-    [SerializeField] protected float Speed;
+    [SerializeField] private float _speed;
+    [SerializeField] private bool _isEnemyBullet;
 
-    [NonSerialized] public CollisionHandler ÑollisionHandler;
-
+    private BulletCollisionHandler _bulletCollisionHandler;
     private float _timeDestroy = 3f;   
     private Coroutine _coroutine;
+    private WaitForSeconds _duration;
+
+    public bool IsEnemyBullet => _isEnemyBullet;
 
     public event Action<Bullet> Removed;
 
     private void Awake()
-    {
-        ÑollisionHandler = GetComponent<CollisionHandler>();               
+    {     
+        _bulletCollisionHandler = GetComponent<BulletCollisionHandler>();
     }
-
-    public abstract void ProcessCollision(IInteractable interactable);
 
     public virtual void OnEnable()
     {
-        ÑollisionHandler.CollisionDetected += ProcessCollision;
+        _bulletCollisionHandler.CollisionDetected += Remove;
+        _duration = new WaitForSeconds(_timeDestroy);
+
         _coroutine = StartCoroutine(DestroyBullet());
     }
 
     public virtual void OnDisable()
     {
-        StopCoroutine(_coroutine);
+        _bulletCollisionHandler.CollisionDetected -= Remove;
+
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
     }
 
     private void Update()
     {
         Move();
-    }
-
-    public virtual void OnDestroy()
-    {
-        ÑollisionHandler.CollisionDetected -= ProcessCollision;
     }
 
     public void Remove()
@@ -49,12 +50,12 @@ public abstract class Bullet : PoolableObject, IInteractable
 
     private void Move()
     {      
-        transform.Translate(Vector2.right * Speed * Time.deltaTime);
+        transform.Translate(Vector2.right * _speed * Time.deltaTime);
     }
 
     private IEnumerator DestroyBullet()
     {
-        yield return new WaitForSeconds(_timeDestroy);
+        yield return _duration;
         Remove();
     }
 }
